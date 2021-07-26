@@ -1,0 +1,68 @@
+struct ButtonColors := {
+    base: color,
+    pressed: color,
+    hovered: color,
+}
+
+Button := Rectangle {
+    callback clicked;
+
+    property <string> text <=> label.text;
+
+    property <bool> primary: true;
+    property <bool> pressed: touch_area.pressed;
+
+    property <color> primary_push_button_base: #6284FF;
+    property <ButtonColors> colors: {
+        base: primary_push_button_base,
+        pressed: primary_push_button_base.darker(40%),
+        hovered: primary_push_button_base.darker(20%),
+    };
+
+    border-radius: 13.5px;
+
+    background: pressed ? colors.pressed : (touch_area.has_hover ? colors.hovered : colors.base);
+
+    border_width: 1px;
+    border_color: black;
+
+    HorizontalLayout {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: parent.border_radius;
+        padding-right: parent.border_radius;
+        label := Text {
+            vertical-alignment: center;
+            horizontal-alignment: center;
+        }
+    }
+
+    touch_area := TouchArea { clicked => { root.clicked() } }
+}
+
+ModdingToolWindow := Window {
+    title: "GameMaker 2 Modding Tool";
+
+    HorizontalLayout {
+        Button {
+            width: 100px;
+            height: 40px;
+            padding: 10px;
+            text: "Extract Files";
+
+            clicked => { root.extract(); }
+        }
+
+        Button {
+            width: 100px;
+            height: 40px;
+            padding: 10px;
+            text: "Inject Files";
+
+            clicked => { root.inject(); }
+        }
+    }
+
+    callback extract;
+    callback inject;
+}
