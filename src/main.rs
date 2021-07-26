@@ -23,10 +23,16 @@ fn main() {
     window.on_inject(|| {
         println!("Injecting...");
         let _ = catch_unwind(|| {
+            println!("Injecting sprites...");
             gm_data_win::main(gm_data_win::Args {
-                mod_audio: true,
                 mod_sprites: true,
                 mod_textures: true,
+                .. Default::default()
+            }, false);
+
+            println!("Injecting audio...");
+            gm_data_win::main(gm_data_win::Args {
+                mod_audio: true,
                 .. Default::default()
             }, false);
 
