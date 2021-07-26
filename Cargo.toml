@@ -5,7 +5,7 @@ edition = "2018"
 
 [dependencies]
 sixtyfps = "0.1.0"
-gm_data_win = { path = "../gm_data_win" }
+gm_data_win = { git = "https://github.com/jam1garner/gm_data_win" }
 
 [build-dependencies]
 sixtyfps-build = "0.1.0"
