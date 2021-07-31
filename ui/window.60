@@ -6,49 +6,15 @@ struct ButtonColors := {
     hovered: color,
 }
 
-//Button := Rectangle {
-//    callback clicked;
-//
-//    property <string> text <=> label.text;
-//
-//    property <bool> primary: true;
-//    property <bool> pressed: touch_area.pressed;
-//
-//    property <color> primary_push_button_base: #6284FF;
-//    property <ButtonColors> colors: {
-//        base: primary_push_button_base,
-//        pressed: primary_push_button_base.darker(40%),
-//        hovered: primary_push_button_base.darker(20%),
-//    };
-//
-//    border-radius: 13.5px;
-//
-//    background: pressed ? colors.pressed : (touch_area.has_hover ? colors.hovered : colors.base);
-//
-//    border_width: 1px;
-//    border_color: black;
-//
-//    HorizontalLayout {
-//        padding-top: 0px;
-//        padding-bottom: 0px;
-//        padding-left: parent.border_radius;
-//        padding-right: parent.border_radius;
-//        label := Text {
-//            vertical-alignment: center;
-//            horizontal-alignment: center;
-//        }
-//    }
-//
-//    touch_area := TouchArea { clicked => { root.clicked() } }
-//}
-
 ModdingToolWindow := Window {
     property<bool> sprites <=> sprite_checkbox.checked;
     property<bool> textures <=> texture_checkbox.checked;
     property<bool> audio <=> audio_checkbox.checked;
     property<bool> fonts <=> font_checkbox.checked;
 
-    title: "GameMaker 2 Modding Tool";
+    property<string> title_text: "GameMaker 2 Modding Tool";
+
+    title: title_text;
 
     VerticalLayout {
         padding: 5px;
@@ -133,55 +99,6 @@ ModdingToolWindow := Window {
             Rectangle { col: 1; row: 2;}
         }
 
-        //HorizontalLayout {
-        //    VerticalLayout {
-        //        padding: 5px;
-        //        spacing: 5px;
-
-        //        sprite_checkbox := CheckBox {
-        //            text: "Sprites";
-        //            checked: true;
-        //        }
-
-        //        texture_checkbox := CheckBox {
-        //            text: "Textures";
-        //            checked: true;
-        //        }
-
-        //        audio_checkbox := CheckBox {
-        //            text: "Audio";
-        //            checked: true;
-        //        }
-        //    }
-
-        //    VerticalLayout {
-        //        padding: 5px;
-        //        spacing: 5px;
-
-        //        Rectangle {
-        //            border_width: 1px;
-        //            border_color: grey;
-
-        //            VerticalLayout { 
-        //                padding: 5px;
-        //                spacing: 0px;
-
-        //                extraction_text := Text {
-        //                    text: "Extraction Only";
-        //                    horizontal_alignment: center;
-        //                }
-
-        //                font_checkbox := CheckBox {
-        //                    text: "Fonts";
-        //                    checked: true;
-        //                }
-        //            }
-        //        }
-
-        //        Rectangle {  }
-        //    }
-
-        //}
     }
 
     callback extract;

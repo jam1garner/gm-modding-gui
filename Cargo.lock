@@ -1000,7 +1000,7 @@ dependencies = [
 
 [[package]]
 name = "gm-modding-gui"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "gm_data_win",
  "sixtyfps",

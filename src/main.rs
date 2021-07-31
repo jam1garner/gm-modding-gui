@@ -21,6 +21,8 @@ fn get_settings(window: &ModdingToolWindow) -> Settings {
 fn main() {
     let window = ModdingToolWindow::new();
 
+    window.set_title_text(format!("GameMaker 2 Modding Tool {}", env!("CARGO_PKG_VERSION")).into());
+
     let win = window.clone_strong();
     window.on_extract(move || {
         println!("Extracting...");
