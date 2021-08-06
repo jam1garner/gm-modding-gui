@@ -11,10 +11,16 @@ ModdingToolWindow := Window {
     property<bool> textures <=> texture_checkbox.checked;
     property<bool> audio <=> audio_checkbox.checked;
     property<bool> fonts <=> font_checkbox.checked;
+    property<bool> allow_install <=> uninstall_mods.enabled;
 
     property<string> title_text: "GameMaker 2 Modding Tool";
+    property<string> game_detected: "Game Detected: Unknown";
 
     title: title_text;
+
+    callback extract;
+    callback inject;
+    callback uninstall;
 
     VerticalLayout {
         padding: 5px;
@@ -25,7 +31,7 @@ ModdingToolWindow := Window {
             spacing: 5px;
 
             Button {
-                width: 100px;
+                width: 130px;
                 height: 40px;
                 padding: 10px;
                 text: "Extract Files";
@@ -34,23 +40,32 @@ ModdingToolWindow := Window {
             }
 
             Button {
-                width: 100px;
+                width: 130px;
                 height: 40px;
                 padding: 10px;
                 text: "Inject Files";
 
                 clicked => { root.inject(); }
             }
+
+            uninstall_mods := Button {
+                width: 130px;
+                height: 40px;
+                padding: 10px;
+                text: "Uninstall Mods";
+
+                clicked => { root.uninstall(); }
+            }
         }
 
         GridLayout {
             spacing: 5px;
-            width: 270px;
+            width: 400px;
 
             VerticalLayout {
                 col: 0;
                 row: 0;
-                rowspan: 3;
+                rowspan: 4;
                 spacing: 5px;
 
                 max_width: 150px;
@@ -95,12 +110,15 @@ ModdingToolWindow := Window {
                     }
                 }
             }
-
-            Rectangle { col: 1; row: 2;}
+            
+            Text { 
+                text: game_detected;
+                col: 1;
+                row: 2;
+                colspan: 2;
+                horizontal_alignment: right;
+                color: grey;
+             }
         }
-
     }
-
-    callback extract;
-    callback inject;
 }

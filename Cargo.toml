@@ -1,9 +1,10 @@
 [package]
 name = "gm-modding-gui"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2018"
 
 [dependencies]
+open = "2"
 sixtyfps = "0.1.0"
 gm_data_win = { git = "https://github.com/jam1garner/gm_data_win" }
 

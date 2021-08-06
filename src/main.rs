@@ -1,6 +1,7 @@
 sixtyfps::include_modules!();
 
 use std::panic::catch_unwind;
+use std::fmt;
 
 struct Settings {
     audio: bool,
@@ -18,10 +19,55 @@ fn get_settings(window: &ModdingToolWindow) -> Settings {
     }
 }
 
+enum SupportedGame {
+    SamuraiGunn2,
+    RivalsOfAether,
+    Unknown
+}
+
+impl SupportedGame {
+    fn game_id(&self) -> Option<&str> {
+        match self {
+            SupportedGame::RivalsOfAether => Some("383980"),
+            SupportedGame::SamuraiGunn2 => Some("1397790"),
+            SupportedGame::Unknown => None,
+        }
+    }
+
+    fn is_recognized(&self) -> bool {
+        !matches!(self, SupportedGame::Unknown)
+    }
+}
+
+impl fmt::Display for SupportedGame {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", match self {
+            SupportedGame::SamuraiGunn2 => "Samurai Gunn 2",
+            SupportedGame::RivalsOfAether => "Rivals of Aether",
+            SupportedGame::Unknown => "Unknown"
+        })
+    }
+}
+
+fn detected_game() -> SupportedGame {
+    let current_dir = std::env::current_dir().unwrap();
+    let folder_name = current_dir.file_name().unwrap().to_string_lossy();
+    match &*folder_name {
+        "Samurai Gunn 2" => SupportedGame::SamuraiGunn2,
+        "Rivals of Aether" => SupportedGame::RivalsOfAether,
+        _ => SupportedGame::Unknown,
+    }
+}
+
 fn main() {
     let window = ModdingToolWindow::new();
 
     window.set_title_text(format!("GameMaker 2 Modding Tool {}", env!("CARGO_PKG_VERSION")).into());
+
+    let game = detected_game();
+    window.set_game_detected(format!("Game Detected: {}", game).into());
+
+    window.set_allow_install(game.is_recognized());
 
     let win = window.clone_strong();
     window.on_extract(move || {
@@ -64,6 +110,14 @@ fn main() {
 
             println!("Finished Injecting!");
         });
+    });
+
+    window.on_uninstall(move || {
+        if let Some(game_id) = game.game_id() {
+            open::that_in_background(format!("steam://validate/{}", game_id));
+        } else {
+            println!("The current game is unrecognized and thus cannot uninstall mods.");
+        }
     });
 
     window.run();
