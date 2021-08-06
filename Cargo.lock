@@ -1011,7 +1011,7 @@ dependencies = [
 [[package]]
 name = "gm_data_win"
 version = "0.2.0"
-source = "git+https://github.com/jam1garner/gm_data_win#ac909aaff9a52e484e8b437f92165b28fcd5e811"
+source = "git+https://github.com/jam1garner/gm_data_win#634b8281ea8106fb38acb919bc85748832104539"
 dependencies = [
  "bimap",
  "image 0.22.5",

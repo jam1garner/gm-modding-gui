@@ -113,9 +113,9 @@ ModdingToolWindow := Window {
             
             Text { 
                 text: game_detected;
-                col: 1;
+                col: 0;
                 row: 2;
-                colspan: 2;
+                colspan: 3;
                 horizontal_alignment: right;
                 color: grey;
              }
